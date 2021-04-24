@@ -14,5 +14,6 @@ app.on('ready', () => {
         }
     );
     console.log(`${__dirname}`);
+    console.log("fix issues");
     mainWindow.webContents.loadURL(`file://${__dirname}/index.html`); // #A
 });
