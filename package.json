@@ -2,7 +2,7 @@
     "name": "bookmarker",
     "version": "1.0.0",
     "description": "Our very first Electron application",
-    "main": "./ch03/app/main.js",
+    "main": "./ch04/app/main.js",
     "scripts": {
         "start": "electron .",
         "test": "echo \"Error: no test specified\" && exit 1"
