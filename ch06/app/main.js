@@ -95,10 +95,10 @@ const getFileFromUser = exports.getFileFromUser = (targetWindow) => {
 
 const openFile = (targetWindow, file) => {
     const content = fs.readFileSync(file).toString();
-    startWatchingFile(targetWindow, file);
     app.addRecentDocument(file);
     targetWindow.setRepresentedFilename(file);
     targetWindow.webContents.send('file-opened', file, content);
+    startWatchingFile(targetWindow, file);
 };
 
 const saveHtml = exports.saveHtml = (targetWindow, content) => {
@@ -145,11 +145,9 @@ const saveMarkdown = exports.saveMarkdown = (targetWindow, file, content) => {
 
 const startWatchingFile = (targetWindow, file) => {
     stopWatchingFile(targetWindow);
-    const watcher = fs.watchFile(file, (event) => {
-        if (event === 'change') {
-            const content = fs.readFileSync(file);
-            targetWindow.webContents.send('file-changed', file, content);
-        }
+    const watcher = fs.watchFile(file, (prev, curr) => {
+        const content = fs.readFileSync(file).toString();
+        targetWindow.webContents.send('file-changed', file, content);
     });
     openFiles.set(targetWindow, watcher);
 };
